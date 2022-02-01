@@ -7,11 +7,12 @@ namespace PerformanceApp
         static CompiledSetter compiledSetter = new CompiledSetter();
         static ReflectionSetter reflectionSetter = new ReflectionSetter();
         static CachedReflectionSetter cachedReflectionSetter = new CachedReflectionSetter();
+        static FastMemberSetter fastMemberSetter = new FastMemberSetter();
 
         static Entity[]? entities = null;
 
         [GlobalSetup]
-        public static void Setup()
+        public void Setup()
         {
             Console.WriteLine("Initializing CompiledSetter");
             compiledSetter.Initialize(typeof(Entity));
@@ -31,21 +32,15 @@ namespace PerformanceApp
         }
 
         [Benchmark]
-        public static void TestCompiled()
-        {
-            Common(compiledSetter);
-        }
+        public void TestCompiled() => Common(compiledSetter);
+
+        [Benchmark(Baseline = true)]
+        public void TestReflection() => Common(reflectionSetter);
 
         [Benchmark]
-        public static void TestReflection()
-        {
-            Common(reflectionSetter);
-        }
+        public void TestCachedReflection() => Common(cachedReflectionSetter);        
 
         [Benchmark]
-        public static void TestCachedReflection()
-        {
-            Common(cachedReflectionSetter);
-        }
+        public void TestFastMember() => Common(fastMemberSetter);        
     }
 }

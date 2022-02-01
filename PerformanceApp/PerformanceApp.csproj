@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+    <PackageReference Include="FastMember" Version="1.5.0" />
   </ItemGroup>
 
 </Project>
